@@ -25,16 +25,17 @@ DISCORD_MESSAGE = "Hey what's up guys, new video uploaded. Go check it out ! \n"
 
 def getVideoData():
     jData = None
-    try:
-        r = requests.get(API_URL, timeout=15)
-        r.raise_for_status()
-        jData = r.json()
-    except requests.exceptions.ConnectionError as cone:
-        print("Connection Error:", cone)
-    except requests.exceptions.Timeout as et:
-        print("Timeout Error:", et)
-    except requests.exceptions.RequestException as re:
-        print("Error message:", re)
+    # stops program -> should not stop :)
+    #try:
+    r = requests.get(API_URL, timeout=15)
+    r.raise_for_status()
+    jData = r.json()
+    #except requests.exceptions.ConnectionError as cone:
+    #    print("Connection Error:", cone)
+    #except requests.exceptions.Timeout as et:
+    #    print("Timeout Error:", et)
+    #except requests.exceptions.RequestException as re:
+    #    print("Error message:", re)
     return jData
 
 def getNewVideoId(jData):
