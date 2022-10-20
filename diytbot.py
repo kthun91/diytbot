@@ -25,20 +25,21 @@ DISCORD_MESSAGE = "Hey what's up guys, new video uploaded. Go check it out ! \n"
 
 def getVideoData():
     jData = None
-    # stops program -> should not stop :)
-    #try:
-    r = requests.get(API_URL, timeout=15)
-    r.raise_for_status()
-    jData = r.json()
-    #except requests.exceptions.ConnectionError as cone:
-    #    print("Connection Error:", cone)
-    #except requests.exceptions.Timeout as et:
-    #    print("Timeout Error:", et)
-    #except requests.exceptions.RequestException as re:
-    #    print("Error message:", re)
+    try:
+        r = requests.get(API_URL, timeout=15)
+        r.raise_for_status()
+        jData = r.json()
+    except requests.exceptions.ConnectionError as cone:
+       print("Connection Error:", cone)
+    except requests.exceptions.Timeout as et:
+       print("Timeout Error:", et)
+    except requests.exceptions.RequestException as re:
+       print("Error message:", re)
     return jData
 
-def getNewVideoId(jData):
+def getNewVideoId(jData, currentVideoId):
+    if jData is None:
+        return currentVideoId
     return jData['items'][0]['snippet']['resourceId']['videoId']
 
 def main():
@@ -46,7 +47,7 @@ def main():
     while True:
         time.sleep(TIME_INTERVAL)
         jData = getVideoData()
-        if getNewVideoId(jData) != currentVideoId:
+        if getNewVideoId(jData, currentVideoId) != currentVideoId:
             currentVideoId = getNewVideoId(jData)
             webhook = Webhook.partial(WEBHOOK_ID, WEBHOOK_TOKEN, adapter=RequestsWebhookAdapter())
             webhook.send(DISCORD_MESSAGE+YOUTUBE_VIDEO_URL+currentVideoId)
