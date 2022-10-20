@@ -48,7 +48,7 @@ def main():
         time.sleep(TIME_INTERVAL)
         jData = getVideoData()
         if getNewVideoId(jData, currentVideoId) != currentVideoId:
-            currentVideoId = getNewVideoId(jData)
+            currentVideoId = getNewVideoId(jData, currentVideoId)
             webhook = Webhook.partial(WEBHOOK_ID, WEBHOOK_TOKEN, adapter=RequestsWebhookAdapter())
             webhook.send(DISCORD_MESSAGE+YOUTUBE_VIDEO_URL+currentVideoId)
 
