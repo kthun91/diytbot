@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Geheimnisse & Laufzeitdaten
+.env
+data/
+
+# Geheimnisse & Laufzeitdaten
+.env
+data/
